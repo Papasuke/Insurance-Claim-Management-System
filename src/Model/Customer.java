@@ -1,4 +1,6 @@
 package Model;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Customer {
@@ -11,6 +13,38 @@ public class Customer {
         this.id = id;
         this.fullName = fullName;
         this.insuranceCard = insuranceCard;
+        this.claims = claims;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public List<InsuranceCard> getInsuranceCard() {
+        return insuranceCard;
+    }
+
+    public void setInsuranceCard(List<InsuranceCard> insuranceCard) {
+        this.insuranceCard = insuranceCard;
+    }
+
+    public List<Claim> getClaims() {
+        return claims;
+    }
+
+    public void setClaims(List<Claim> claims) {
         this.claims = claims;
     }
 }

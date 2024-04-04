@@ -29,6 +29,7 @@ public class Crud {
 
         return products;
     }
+
     // Add data to csv
     public static void write(String filePath, String attributes, String obj) throws IOException {
         File file = new File(filePath);
