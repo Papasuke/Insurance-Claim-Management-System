@@ -1,19 +1,16 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class Customer implements ClaimProcessManager {
+public class Customer {
     private String id;
     private String fullName;
-    private List<InsuranceCard> insuranceCard;
+    private ArrayList<InsuranceCard> insuranceCard;
     private ArrayList<Claim>claims;
 
-    public Customer(String id, String fullName, List<InsuranceCard> insuranceCard, ArrayList<Claim> claims) {
+    public Customer(String id, String fullName) {
         this.id = id;
         this.fullName = fullName;
-        this.insuranceCard = insuranceCard;
-        this.claims = claims;
     }
 
     public String getId() {
@@ -32,11 +29,11 @@ public class Customer implements ClaimProcessManager {
         this.fullName = fullName;
     }
 
-    public List<InsuranceCard> getInsuranceCard() {
+    public ArrayList<InsuranceCard> getInsuranceCard() {
         return insuranceCard;
     }
 
-    public void setInsuranceCard(List<InsuranceCard> insuranceCard) {
+    public void setInsuranceCard(ArrayList<InsuranceCard> insuranceCard) {
         this.insuranceCard = insuranceCard;
     }
 
@@ -46,30 +43,5 @@ public class Customer implements ClaimProcessManager {
 
     public void setClaims(ArrayList<Claim> claims) {
         this.claims = claims;
-    }
-
-    @Override
-    public void add(Object item) {
-
-    }
-
-    @Override
-    public void update(Object item) {
-
-    }
-
-    @Override
-    public void delete(String id) {
-
-    }
-
-    @Override
-    public Object getOne(String id) {
-        return null;
-    }
-
-    @Override
-    public ArrayList getAll() {
-        return null;
     }
 }

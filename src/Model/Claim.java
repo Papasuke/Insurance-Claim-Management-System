@@ -2,29 +2,29 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-public class Claim implements ClaimProcessManager{
+public class Claim{
     private String id;
     private Date claimDate;
     private String insuredPerson;
     private long cardNumber;
     private Date examDate;
-    private List<String> documents;
+    private ArrayList<String> documents;
     private long claimAmount;
     private ClaimStatus status;
     private ArrayList<BankingInfo> receiveBankingInfo;
 
-    public Claim(String id, Date claimDate, String insuredPerson, long cardNumber, Date examDate, List<String> documents, long claimAmount, ClaimStatus status, ArrayList<BankingInfo> receiveBankingInfo) {
+    public Claim(String id, Date claimDate, String insuredPerson, long cardNumber, Date examDate, long claimAmount, ClaimStatus status) {
         this.id = id;
         this.claimDate = claimDate;
         this.insuredPerson = insuredPerson;
         this.cardNumber = cardNumber;
         this.examDate = examDate;
-        this.documents = documents;
         this.claimAmount = claimAmount;
         this.status = status;
-        this.receiveBankingInfo = receiveBankingInfo;
+    }
+
+    public Claim() {
     }
 
     public String getId() {
@@ -67,11 +67,11 @@ public class Claim implements ClaimProcessManager{
         this.examDate = examDate;
     }
 
-    public List<String> getDocuments() {
+    public ArrayList<String> getDocuments() {
         return documents;
     }
 
-    public void setDocuments(List<String> documents) {
+    public void setDocuments(ArrayList<String> documents) {
         this.documents = documents;
     }
 
@@ -97,30 +97,5 @@ public class Claim implements ClaimProcessManager{
 
     public void setReceiveBankingInfo(ArrayList<BankingInfo> receiveBankingInfo) {
         this.receiveBankingInfo = receiveBankingInfo;
-    }
-
-    @Override
-    public void add(Object item) {
-
-    }
-
-    @Override
-    public void update(Object item) {
-
-    }
-
-    @Override
-    public void delete(String id) {
-
-    }
-
-    @Override
-    public Object getOne(String id) {
-        return null;
-    }
-
-    @Override
-    public ArrayList getAll() {
-        return null;
     }
 }

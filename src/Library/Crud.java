@@ -3,28 +3,21 @@ package Library;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class Crud {
 
     //Read all data from CSV
-    public static List<String> readAllLine(String filePath) throws IOException {
-        File file = new File(filePath);
-        if (!file.exists()) {
-            file.createNewFile();
-        }
-        FileReader fr = new FileReader(filePath);
-        BufferedReader br = new BufferedReader(fr);
-        String currentLine;
-        List<String> products = new ArrayList<String>();
-        String[] data;
+    public static ArrayList<String> readAllLine(String filePath) throws IOException {
+        ArrayList<String> products = new ArrayList<>();
 
-        // Skip the first line
-        br.readLine();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            br.readLine(); // Skip the first line
 
-        while ((currentLine = br.readLine()) != null) {
-            data = currentLine.split(",");
-            Collections.addAll(products, data); // Add all data to list
+            String currentLine;
+            while ((currentLine = br.readLine()) != null) {
+                String[] data = currentLine.split(",");
+                Collections.addAll(products, data); // Add all data to list
+            }
         }
 
         return products;
