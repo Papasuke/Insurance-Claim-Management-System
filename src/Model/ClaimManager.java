@@ -1,38 +1,36 @@
 package Model;
 
-import Library.Crud;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ClaimManager implements ClaimProcessManager {
-
-    private String filePath;
     private ArrayList<Claim> claims;
 
-    public ClaimManager(String filePath) {
-        this.filePath = filePath;
-    }
-
-    public ClaimManager(ArrayList<Claim> claims) {
-        this.claims = claims;
-    }
 
     @Override
     public void add(Object item) {
         if (item instanceof Claim) {
-            try {
-                Crud.write(filePath, "ID, CLAIM DATE, INSURED PERSON, CARD NUMBER, EXAM DATE, CLAIM AMOUNT, CLAIM STATUS" , (String) item);
-            } catch (IOException e) {
-                System.err.println("Error occurred while adding claim: " + e.getMessage());
-            }
+            claims.add((Claim) item);
         } else {
-            System.out.println("Wrong format for adding claim!");
+            System.out.println("Invalid item. Must be an instance of Claim.");
         }
     }
 
     @Override
     public void update(Object item) {
+        if (item instanceof Claim) {
+            Claim updatedClaim = (Claim) item;
+            for (int i = 0; i < claims.size(); i++) {
+                Claim existingClaim = claims.get(i);
+                if (existingClaim.getId().equals(updatedClaim.getId())) {
+                    claims.set(i, updatedClaim);
+                    System.out.println("Claim updated successfully.");
+                    return;
+                }
+            }
+            System.out.println("Claim not found with ID: " + updatedClaim.getId());
+        } else {
+            System.out.println("Invalid item. Must be an instance of Claim.");
+        }
     }
 
     @Override
@@ -42,34 +40,17 @@ public class ClaimManager implements ClaimProcessManager {
 
     @Override
     public Object getOne(String id) {
-        try {
-            ArrayList<String> claimStrings = Crud.readAllLine(filePath);
-            for (String claimString : claimStrings) {
-                String[] data = claimString.split(",");
-                if (data[0].equals(id)) {
-                    // Create a Claim object from the data
-                    Claim claim = new Claim();
-                    claim.setId(data[0]);
-                    // Set other properties of the claim similarly
-                    return claim;
-                }
+        for (Claim claim : claims) {
+            if (claim.getId().equals(id)) {
+                return claim;
             }
-            System.out.println("Claim not found with ID: " + id);
-        } catch (IOException e) {
-            System.err.println("Error occurred while getting one claim: " + e.getMessage());
         }
+        System.out.println("Claim not found with ID: " + id);
         return null;
     }
 
     @Override
-    public ArrayList<Object> getAll() {
-        ArrayList<Object> claims = new ArrayList<>();
-        try {
-            ArrayList<String> claimStrings = Crud.readAllLine(filePath);
-            claims.addAll(claimStrings);
-        } catch (IOException e) {
-            System.err.println("Error occurred while getting all claims: " + e.getMessage());
-        }
+    public ArrayList<Claim> getAll() {
         return claims;
     }
 }
