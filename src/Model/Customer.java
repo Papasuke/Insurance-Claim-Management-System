@@ -13,6 +13,9 @@ public class Customer {
         this.fullName = fullName;
     }
 
+    public Customer(){
+    }
+
     public String getId() {
         return id;
     }
