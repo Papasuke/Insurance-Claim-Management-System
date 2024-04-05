@@ -1,9 +1,10 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Claim {
+public class Claim implements ClaimProcessManager{
     private String id;
     private Date claimDate;
     private String insuredPerson;
@@ -12,9 +13,9 @@ public class Claim {
     private List<String> documents;
     private long claimAmount;
     private ClaimStatus status;
-    private List<BankingInfo> receiveBankingInfo;
+    private ArrayList<BankingInfo> receiveBankingInfo;
 
-    public Claim(String id, Date claimDate, String insuredPerson, long cardNumber, Date examDate, List<String> documents, long claimAmount, ClaimStatus status, List<BankingInfo> receiveBankingInfo) {
+    public Claim(String id, Date claimDate, String insuredPerson, long cardNumber, Date examDate, List<String> documents, long claimAmount, ClaimStatus status, ArrayList<BankingInfo> receiveBankingInfo) {
         this.id = id;
         this.claimDate = claimDate;
         this.insuredPerson = insuredPerson;
@@ -90,11 +91,36 @@ public class Claim {
         this.status = status;
     }
 
-    public List<BankingInfo> getReceiveBankingInfo() {
+    public ArrayList<BankingInfo> getReceiveBankingInfo() {
         return receiveBankingInfo;
     }
 
-    public void setReceiveBankingInfo(List<BankingInfo> receiveBankingInfo) {
+    public void setReceiveBankingInfo(ArrayList<BankingInfo> receiveBankingInfo) {
         this.receiveBankingInfo = receiveBankingInfo;
+    }
+
+    @Override
+    public void add(Object item) {
+
+    }
+
+    @Override
+    public void update(Object item) {
+
+    }
+
+    @Override
+    public void delete(String id) {
+
+    }
+
+    @Override
+    public Object getOne(String id) {
+        return null;
+    }
+
+    @Override
+    public ArrayList getAll() {
+        return null;
     }
 }

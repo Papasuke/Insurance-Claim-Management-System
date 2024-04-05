@@ -1,15 +1,15 @@
 package Model;
-import java.util.Collections;
-import java.util.Comparator;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class Customer {
+public class Customer implements ClaimProcessManager {
     private String id;
     private String fullName;
     private List<InsuranceCard> insuranceCard;
-    private List<Claim>claims;
+    private ArrayList<Claim>claims;
 
-    public Customer(String id, String fullName, List<InsuranceCard> insuranceCard, List<Claim> claims) {
+    public Customer(String id, String fullName, List<InsuranceCard> insuranceCard, ArrayList<Claim> claims) {
         this.id = id;
         this.fullName = fullName;
         this.insuranceCard = insuranceCard;
@@ -40,11 +40,36 @@ public class Customer {
         this.insuranceCard = insuranceCard;
     }
 
-    public List<Claim> getClaims() {
+    public ArrayList<Claim> getClaims() {
         return claims;
     }
 
-    public void setClaims(List<Claim> claims) {
+    public void setClaims(ArrayList<Claim> claims) {
         this.claims = claims;
+    }
+
+    @Override
+    public void add(Object item) {
+
+    }
+
+    @Override
+    public void update(Object item) {
+
+    }
+
+    @Override
+    public void delete(String id) {
+
+    }
+
+    @Override
+    public Object getOne(String id) {
+        return null;
+    }
+
+    @Override
+    public ArrayList getAll() {
+        return null;
     }
 }

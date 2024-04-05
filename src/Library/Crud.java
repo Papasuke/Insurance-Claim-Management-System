@@ -38,14 +38,14 @@ public class Crud {
             // Check if the file created or not. If not, Creating csv file and add attributes to the first line
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 writer.write(attributes);
-                writer.newLine(); // Thêm dòng mới
+                writer.newLine();
             }
         }
 
         // Add new data to csv
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
             writer.write(obj);
-            writer.newLine(); // Thêm dòng mới
+            writer.newLine();
         }
     }
 
