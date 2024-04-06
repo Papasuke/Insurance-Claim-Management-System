@@ -24,7 +24,7 @@ public class CustomerManager implements ClaimProcessManager{
     }
 
     @Override
-    public ArrayList<Object> getAll() {
+    public ArrayList getAll() {
         return null;
     }
 }

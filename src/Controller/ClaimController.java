@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class ClaimController {
 
     private static final String filePath = "Data/Claim.txt";
+
+
     public ArrayList<Claim> getAllClaims() {
         ArrayList<Claim> claims = new ArrayList<>();
         try {
@@ -20,6 +22,7 @@ public class ClaimController {
                 claim.setId(data[0]);
                 // Set other properties of the claim similarly
                 claims.add(claim);
+
             }
         } catch (IOException e) {
             System.err.println("Error occurred while reading claims: " + e.getMessage());
@@ -27,15 +30,16 @@ public class ClaimController {
         return claims;
     }
 
-    public void removeClaimFromCSV (Claim claim) {
-
-    }
-
-    public void addClaimToCSV (Claim claim) {
-
-    }
-
-    public void updateClaimFromCSV (Claim claim) {
-
+    public void addAllClaimsToCSV(ArrayList<Claim> claims) {
+        try {
+            //Clear CSV before update new data
+            Crud.clearCSV(filePath);
+            for (Claim claim : claims) {
+                Crud.write(filePath, "ID, CLAIM DATE, INSURED PERSON, CARD NUMBER, EXAM DATE, CLAIM AMOUNT, STATUS", claim.toString());
+            }
+            System.out.println("Added all claims successfully !!!");
+        } catch (IOException e) {
+            System.err.println("Error occurred while adding claims to CSV: " + e.getMessage());
+        }
     }
 }

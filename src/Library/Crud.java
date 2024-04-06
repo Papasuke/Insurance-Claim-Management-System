@@ -42,4 +42,14 @@ public class Crud {
         }
     }
 
+    public static void clearCSV(String filePath) throws IOException {
+        File file = new File(filePath);
+        if (file.exists()) {
+            // clear data from CSV
+            FileWriter fw = new FileWriter(file);
+            fw.write("");
+            fw.close();
+        }
+    }
+
 }

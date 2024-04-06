@@ -25,8 +25,4 @@ public class CustomerController {
         }
         return customers;
     }
-
-    public void removeCustomerFromCSV (Customer customer){
-
-    }
 }

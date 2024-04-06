@@ -1,5 +1,6 @@
 package Model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -97,5 +98,20 @@ public class Claim{
 
     public void setReceiveBankingInfo(ArrayList<BankingInfo> receiveBankingInfo) {
         this.receiveBankingInfo = receiveBankingInfo;
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String claimDateString = dateFormat.format(claimDate);
+        String examDateString = dateFormat.format(examDate);
+
+        return id +
+                "," + claimDateString +
+                "," + insuredPerson +
+                "," + cardNumber +
+                "," + examDateString +
+                "," + claimAmount +
+                "," + status.name();
     }
 }
