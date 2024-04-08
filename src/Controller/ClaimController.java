@@ -2,13 +2,15 @@ package Controller;
 
 import Library.Crud;
 import Model.Claim;
+import Model.ClaimStatus;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class ClaimController {
 
-    private static final String filePath = "Data/Claim.txt";
+    private static final String filePath = "src/Data/Claim.txt";
 
 
     public ArrayList<Claim> getAllClaims() {
@@ -18,11 +20,20 @@ public class ClaimController {
             for (String claimString : claimStrings) {
                 String[] data = claimString.split(",");
                 // Create a new Claim from the data and add it to the list
-                Claim claim = new Claim();
-                claim.setId(data[0]);
-                // Set other properties of the claim similarly
-                claims.add(claim);
-
+                try {
+                    Claim claim = new Claim(
+                            data[0],
+                            data[1],
+                            data[2],
+                            Long.parseLong(data[3]),
+                            data[4],
+                            Long.parseLong(data[5]),
+                            ClaimStatus.valueOf(data[6])
+                    );
+                    claims.add(claim);
+                } catch (ParseException | IllegalArgumentException | ArrayIndexOutOfBoundsException e) {
+                    System.err.println("Error creating claim: " + e.getMessage());
+                }
             }
         } catch (IOException e) {
             System.err.println("Error occurred while reading claims: " + e.getMessage());
@@ -37,7 +48,6 @@ public class ClaimController {
             for (Claim claim : claims) {
                 Crud.write(filePath, "ID, CLAIM DATE, INSURED PERSON, CARD NUMBER, EXAM DATE, CLAIM AMOUNT, STATUS", claim.toString());
             }
-            System.out.println("Added all claims successfully !!!");
         } catch (IOException e) {
             System.err.println("Error occurred while adding claims to CSV: " + e.getMessage());
         }

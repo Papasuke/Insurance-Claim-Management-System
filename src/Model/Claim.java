@@ -1,10 +1,10 @@
 package Model;
 
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Claim{
+public class Claim {
     private String id;
     private Date claimDate;
     private String insuredPerson;
@@ -15,12 +15,12 @@ public class Claim{
     private ClaimStatus status;
     private ArrayList<BankingInfo> receiveBankingInfo;
 
-    public Claim(String id, Date claimDate, String insuredPerson, long cardNumber, Date examDate, long claimAmount, ClaimStatus status) {
+    public Claim(String id, String claimDate, String insuredPerson, long cardNumber, String examDate, long claimAmount, ClaimStatus status) throws ParseException {
         this.id = id;
-        this.claimDate = claimDate;
+        this.claimDate = DateUtils.parseDate(claimDate);
         this.insuredPerson = insuredPerson;
         this.cardNumber = cardNumber;
-        this.examDate = examDate;
+        this.examDate = DateUtils.parseDate(examDate);
         this.claimAmount = claimAmount;
         this.status = status;
     }
@@ -40,8 +40,8 @@ public class Claim{
         return claimDate;
     }
 
-    public void setClaimDate(Date claimDate) {
-        this.claimDate = claimDate;
+    public void setClaimDate(String claimDate) throws ParseException {
+        this.claimDate = DateUtils.parseDate(claimDate);
     }
 
     public String getInsuredPerson() {
@@ -64,8 +64,8 @@ public class Claim{
         return examDate;
     }
 
-    public void setExamDate(Date examDate) {
-        this.examDate = examDate;
+    public void setExamDate(String examDate) throws ParseException {
+        this.examDate = DateUtils.parseDate(examDate);
     }
 
     public ArrayList<String> getDocuments() {
@@ -100,18 +100,21 @@ public class Claim{
         this.receiveBankingInfo = receiveBankingInfo;
     }
 
+    private boolean validateAndFormatId(String id) {
+        if (!id.matches("\\d{10}")) {
+            throw new IllegalArgumentException("Claim ID must be 10 digits long.");
+        }
+        return true;
+    }
+
     @Override
     public String toString() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String claimDateString = dateFormat.format(claimDate);
-        String examDateString = dateFormat.format(examDate);
-
         return id +
-                "," + claimDateString +
+                "," + DateUtils.formatDate(claimDate) +
                 "," + insuredPerson +
                 "," + cardNumber +
-                "," + examDateString +
+                "," + DateUtils.formatDate(examDate) +
                 "," + claimAmount +
-                "," + status.name();
+                "," + ((status != null) ? status.name() : "");
     }
 }

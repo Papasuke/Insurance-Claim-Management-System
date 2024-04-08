@@ -2,54 +2,75 @@ package Library;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Crud {
 
-    //Read all data from CSV
     public static ArrayList<String> readAllLine(String filePath) throws IOException {
-        ArrayList<String> products = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            br.readLine(); // Skip the first line
-
-            String currentLine;
-            while ((currentLine = br.readLine()) != null) {
-                String[] data = currentLine.split(",");
-                Collections.addAll(products, data); // Add all data to list
-            }
-        }
-
-        return products;
-    }
-
-    // Add data to csv
-    public static void write(String filePath, String attributes, String obj) throws IOException {
+        ArrayList<String> data = new ArrayList<>();
         File file = new File(filePath);
 
         if (!file.exists()) {
-            // Check if the file created or not. If not, Creating csv file and add attributes to the first line
+            return data; // Return an empty ArrayList if the file does not exist
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            // skip the first line
+            br.readLine();
+
+            String currentLine;
+            while ((currentLine = br.readLine()) != null) {
+                data.add(currentLine);
+            }
+        }
+
+        return data;
+    }
+
+    public static void write(String filePath, String attributes, String obj) throws IOException {
+        File file = new File(filePath);
+
+        // Check if the file existed or not
+        if (!file.exists()) {
+            // If not create one and add attributes to the first line
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 writer.write(attributes);
                 writer.newLine();
             }
+        } else {
+            // Check if the first line has attributes or not
+            boolean hasAttributes = false;
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String firstLine = reader.readLine(); // Đọc dòng đầu tiên
+                if (firstLine != null && firstLine.equals(attributes)) {
+                    hasAttributes = true;
+                }
+            }
+
+            // If not, write the attributes
+            if (!hasAttributes) {
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+                    writer.write(attributes);
+                    writer.newLine();
+                }
+            }
         }
 
-        // Add new data to csv
+        // write new obj to the csv
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
             writer.write(obj);
             writer.newLine();
         }
     }
 
+
     public static void clearCSV(String filePath) throws IOException {
         File file = new File(filePath);
-        if (file.exists()) {
-            // clear data from CSV
-            FileWriter fw = new FileWriter(file);
-            fw.write("");
-            fw.close();
+        if (!file.exists()) {
+            return;
         }
-    }
 
+        // Clear the data from CSV
+        PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(filePath)));
+        writer.close();
+    }
 }
